@@ -1,0 +1,4 @@
+repository "Game Dev Spring 2025@AstralSquid@cloud"
+  path "/"
+    br "/main"
+    co "/main"
