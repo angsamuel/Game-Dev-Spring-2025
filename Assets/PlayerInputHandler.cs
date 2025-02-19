@@ -9,14 +9,25 @@ public class PlayerInputHandler : MonoBehaviour
     public Transform cameraPivotTransform; //rotate to look
     public float cameraPivotSpeed = 100f;
 
+    TimeManager timeManager;
+
 
     //Creature creature;
-
+    void Awake(){
+        timeManager = GetComponent<TimeManager>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         //creature = creatureObject.GetComponent<Creature>();
         Debug.Log(cameraTransform.forward);
+        Cursor.visible = false;
+        // Cursor.visible = true;
+
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
+
     }
 
     void FixedUpdate()
@@ -119,6 +130,10 @@ public class PlayerInputHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
         {
             cameraPivotTransform.Rotate(Vector3.up, cameraPivotSpeed * Time.deltaTime);
+        }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            timeManager.ToggleSlowTime();
         }
     }
 }
