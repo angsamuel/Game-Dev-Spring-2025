@@ -4,11 +4,12 @@ public class PlayerInputHandler : MonoBehaviour
 {
 
 
-    public Creature creature;
+    public Creature playerCreature;
+    public Creature dogCreature;
+    public Kunai kunai;
     public Transform cameraTransform;
     public Transform cameraPivotTransform; //rotate to look
     public float cameraPivotSpeed = 100f;
-
     TimeManager timeManager;
 
 
@@ -98,20 +99,20 @@ public class PlayerInputHandler : MonoBehaviour
         finalMovement.Normalize();
 
         //creature.Move(finalMovement);
-        creature.MoveWithCC(finalMovement);
+        playerCreature.MoveWithCC(finalMovement);
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-           creature.PoofSmokeBomb();
+           playerCreature.PoofSmokeBomb();
         }
 
         if(Input.GetKeyDown(KeyCode.T)){
-            creature.TeleportRandomly();
+            playerCreature.TeleportRandomly();
         }
 
 
         if(Input.GetKeyDown(KeyCode.F)){
-            creature.ThrowStar();
+            playerCreature.ThrowStar();
         }
 
         if(Input.GetKeyDown(KeyCode.Q)){
@@ -119,7 +120,7 @@ public class PlayerInputHandler : MonoBehaviour
         }
 
         if(Input.GetKeyDown(KeyCode.Space)){
-            creature.Jump();
+            playerCreature.Jump();
         }
 
 
@@ -135,5 +136,15 @@ public class PlayerInputHandler : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R)){
             timeManager.ToggleSlowTime();
         }
+
+
+        if(Input.GetKeyDown(KeyCode.Mouse1)){
+            dogCreature.Jump();
+        }
+
+        if(Input.GetKeyDown(KeyCode.Mouse0)){
+            kunai.Shoot();
+        }
+
     }
 }

@@ -22,6 +22,14 @@ public class DogusAI : MonoBehaviour
             return;
         }
 
+        if(!myCreature.CreatureOnGround()){
+            return;
+        }
+
+        if(!followCreature.CreatureOnGround()){
+            return;
+        }
+
 
         Vector3 direction = followCreature.transform.position - myCreature.transform.position;
          direction.y = 0;

@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Game Dev Spring 2025.sln"
+    "dotnet.defaultSolution": "Game-Dev-Spring-2025.sln"
 }

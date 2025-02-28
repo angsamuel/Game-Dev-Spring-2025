@@ -13,6 +13,8 @@ public class TrainingTarget : MonoBehaviour
 
     public Color canSeeColor;
     public Color noCanSeeColor;
+    public Color hitColor;
+    bool hit = false;
 
     void Start(){
 
@@ -31,12 +33,35 @@ public class TrainingTarget : MonoBehaviour
     }
 
     public void CanSee(){
-
+        if(hit){
+            return;
+        }
         myRenderer.material.color = canSeeColor;
     }
 
     public void NoCanSee(){
-
+        if(hit){
+            return;
+        }
         myRenderer.material.color = noCanSeeColor;
+    }
+
+    
+    public void SetAsHit(){
+        hit = true;
+        myRenderer.material.color = hitColor;
+    }
+
+    public void Relocate(){
+        hit = false;
+        StartCoroutine(RelocateRoutine());
+    }
+
+    
+
+    IEnumerator RelocateRoutine(){
+        Vector3 newPosition = new Vector3(Random.Range(-14,14),0,Random.Range(-14,14));
+        transform.position = newPosition;
+        yield return null;
     }
 }

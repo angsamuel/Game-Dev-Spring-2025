@@ -77,6 +77,9 @@ public class Creature : MonoBehaviour
             Debug.Log("Refill stars");
             RefillStars(other.gameObject);
         }
+        if(other.CompareTag("Obstacle")){
+           SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
     }
 
