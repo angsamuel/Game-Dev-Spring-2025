@@ -8,6 +8,7 @@ public class TrainingTarget : MonoBehaviour
     public Vector3 endPosition;
 
     public float riseTime = 1f;
+    public float riseAmount = 2f;
 
     public Renderer myRenderer;
 
@@ -18,14 +19,30 @@ public class TrainingTarget : MonoBehaviour
 
     void Start(){
 
-        StartCoroutine(RiseRoutine());
+        Relocate();
     }
 
     IEnumerator RiseRoutine(){
         float t = 0;
-        while(t < riseTime){
+        startPosition = transform.position;
+        endPosition = transform.position + new Vector3(0, riseAmount, 0);
+        while (t < riseTime){
             t += Time.deltaTime;
             transform.position = Vector3.Lerp(startPosition,endPosition,t/riseTime);
+            yield return null;
+        }
+        transform.position = endPosition;
+        yield return null;
+    }
+
+    IEnumerator FallRoutine(){
+        float t = 0;
+        startPosition = transform.position;
+        endPosition = transform.position + new Vector3(0, -riseAmount, 0);
+        while (t < riseTime)
+        {
+            t += Time.deltaTime;
+            transform.position = Vector3.Lerp(startPosition, endPosition, t / riseTime);
             yield return null;
         }
         transform.position = endPosition;
@@ -46,7 +63,7 @@ public class TrainingTarget : MonoBehaviour
         myRenderer.material.color = noCanSeeColor;
     }
 
-    
+
     public void SetAsHit(){
         hit = true;
         myRenderer.material.color = hitColor;
@@ -54,14 +71,19 @@ public class TrainingTarget : MonoBehaviour
 
     public void Relocate(){
         hit = false;
+
         StartCoroutine(RelocateRoutine());
     }
 
-    
+
 
     IEnumerator RelocateRoutine(){
-        Vector3 newPosition = new Vector3(Random.Range(-14,14),0,Random.Range(-14,14));
+        Vector3 newPosition = new Vector3(Random.Range(-14,14),-2,Random.Range(-14,14));
+
+        StartCoroutine(FallRoutine());
+        yield return new WaitForSeconds(riseTime);
         transform.position = newPosition;
+        StartCoroutine(RiseRoutine());
         yield return null;
     }
 }

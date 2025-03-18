@@ -14,6 +14,13 @@ public class Creature : MonoBehaviour
     public int maxJumps = 2;
     public int jumpsLeft = 2;
 
+    [Header("Animation")]
+    public AnimationStateChanger animationStateChanger;
+    public string idleAnimationState = "HumanIdle";
+    public string walkAnimationState = "HumanWalk";
+    public string jumpAnimationState = "HumanJump";
+
+
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip pickupSound;
@@ -38,11 +45,20 @@ public class Creature : MonoBehaviour
 
     void Start(){
         throwingStarsLeft = maxThrowingStars;
-
+        ChangeCreatureAnimation(idleAnimationState);
     }
 
     void Update(){
         ApplyGravityToCC();
+
+    }
+
+    void ChangeCreatureAnimation(string newAnimationState){
+        if(!CreatureOnGround()){
+            animationStateChanger?.ChangeAnimationState(jumpAnimationState);
+            return;
+        }
+        animationStateChanger?.ChangeAnimationState(newAnimationState);
     }
 
 
@@ -99,8 +115,15 @@ public class Creature : MonoBehaviour
 
     public void MoveWithCC(Vector3 direction){
         characterController.Move(direction * speed * Time.deltaTime);
+        if(direction == Vector3.zero){
+            ChangeCreatureAnimation(idleAnimationState);
+            return;
+        }
+        ChangeCreatureAnimation(walkAnimationState);
         transform.LookAt(transform.position + direction);
     }
+
+
 
     Vector3 gravityVelocity = Vector3.zero;
     void ApplyGravityToCC(){
